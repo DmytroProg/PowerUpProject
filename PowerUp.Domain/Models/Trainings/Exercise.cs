@@ -1,6 +1,6 @@
 ﻿using PowerUp.Domain.Models.Base;
 
-namespace PowerUp.Domain.Models.Training;
+namespace PowerUp.Domain.Models.Trainings;
 
 public class Exercise : BaseEntity
 {
