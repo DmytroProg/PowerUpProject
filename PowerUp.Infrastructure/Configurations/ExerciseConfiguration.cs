@@ -12,5 +12,7 @@ public class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
         builder.HasMany(x => x.SimilarExercises)
             .WithMany();
+        
+        builder.HasQueryFilter(t => !t.DeletedAt.HasValue);
     }
 }

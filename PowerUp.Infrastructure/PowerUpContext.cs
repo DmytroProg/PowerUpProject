@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PowerUp.Domain.Abstarctions;
 using PowerUp.Infrastructure.Configurations;
 
 namespace PowerUp.Infrastructure;
 
-public class PowerUpContext : DbContext
+public class PowerUpContext : DbContext, IUnitOfWork
 {
     public PowerUpContext(DbContextOptions<PowerUpContext> options) : base(options)
     {

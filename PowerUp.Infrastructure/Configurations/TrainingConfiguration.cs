@@ -12,5 +12,7 @@ public class TrainingConfiguration : IEntityTypeConfiguration<Training>
 
         builder.HasMany(t => t.Exercises)
             .WithMany();
+
+        builder.HasQueryFilter(t => !t.DeletedAt.HasValue);
     }
 }
