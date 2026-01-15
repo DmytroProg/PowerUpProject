@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PowerUp.Application.Services.Auth;
 using PowerUp.Application.Services.Auth.Jwt;
 using PowerUp.Domain.Abstarctions;
@@ -19,6 +22,22 @@ public static class DependencyInjection
         services.AddTransient<IJwtGenerator, JwtGenerator>();
         services.AddScoped<AuthService>();
 
+        return services;
+    }
+
+    public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]!)),
+                };
+            });
+        
         return services;
     }
 }
