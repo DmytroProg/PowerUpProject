@@ -12,7 +12,14 @@ public class PowerUpContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TrainingConfiguration).Assembly);
+        //modelBuilder.ApplyConfigurationsFromAssembly(typeof(TrainingConfiguration).Assembly);
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
         base.OnModelCreating(modelBuilder);
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        Console.WriteLine("Saved");
+        return base.SaveChangesAsync(cancellationToken);
     }
 }

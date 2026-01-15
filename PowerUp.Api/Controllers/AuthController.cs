@@ -15,8 +15,18 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
+    public async Task<IActionResult> Login([FromBody] LoginUserRequest request, CancellationToken cancellationToken)
     {
-        return Ok(await _authService.Login(request));
+        var response = await _authService.Login(request, cancellationToken);
+        
+        return Ok(response);
+    }
+    
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterUserRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _authService.Register(request, cancellationToken);
+        
+        return Ok(response);
     }
 }

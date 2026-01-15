@@ -8,6 +8,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\PowerUp.Domain\PowerUp.Domain.csproj" />
+      <ProjectReference Include="..\PowerUp.Infrastructure\PowerUp.Infrastructure.csproj" />
+      <ProjectReference Include="..\PowerUp.Shared\PowerUp.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
