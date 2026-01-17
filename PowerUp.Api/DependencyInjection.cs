@@ -1,9 +1,11 @@
-﻿using System.Text;
+﻿using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PowerUp.Application.Services.Auth;
 using PowerUp.Application.Services.Auth.Jwt;
+using PowerUp.Application.Services.Trainings;
 using PowerUp.Domain.Abstarctions;
 using PowerUp.Domain.Abstarctions.Repositories;
 using PowerUp.Infrastructure;
@@ -18,9 +20,11 @@ public static class DependencyInjection
         services.AddDbContext<PowerUpContext>(options => options.UseInMemoryDatabase("TestPowerUpDB"));
         services.AddScoped<IUnitOfWork>(s => s.GetRequiredService<PowerUpContext>());
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITrainingRepository, TrainingRepository>();
         
         services.AddTransient<IJwtGenerator, JwtGenerator>();
         services.AddScoped<AuthService>();
+        services.AddScoped<TrainingsService>();
 
         return services;
     }
@@ -34,6 +38,7 @@ public static class DependencyInjection
                 {
                     ValidateIssuer = false,
                     ValidateAudience = false,
+                    RoleClaimType = ClaimTypes.Role,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]!)),
                 };
             });
