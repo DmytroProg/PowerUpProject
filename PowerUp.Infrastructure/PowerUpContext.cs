@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PowerUp.Domain.Abstarctions;
+using PowerUp.Domain.Abstractions;
 using PowerUp.Infrastructure.Configurations;
 
 namespace PowerUp.Infrastructure;

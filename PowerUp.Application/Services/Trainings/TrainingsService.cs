@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using PowerUp.Domain.Abstarctions;
-using PowerUp.Domain.Abstarctions.Repositories;
+using PowerUp.Domain.Abstractions;
+using PowerUp.Domain.Abstractions.Repositories;
 using PowerUp.Domain.Models.Trainings;
 using PowerUp.Domain.Requests.Trainings;
 using PowerUp.Domain.Responses;

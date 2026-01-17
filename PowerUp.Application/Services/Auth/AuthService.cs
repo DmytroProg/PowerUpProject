@@ -1,6 +1,6 @@
 ﻿using PowerUp.Application.Services.Auth.Jwt;
-using PowerUp.Domain.Abstarctions;
-using PowerUp.Domain.Abstarctions.Repositories;
+using PowerUp.Domain.Abstractions;
+using PowerUp.Domain.Abstractions.Repositories;
 using PowerUp.Domain.Enums;
 using PowerUp.Domain.Models.Users;
 using PowerUp.Shared.Hash;

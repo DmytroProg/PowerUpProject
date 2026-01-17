@@ -2,7 +2,7 @@
 using PowerUp.Domain.Requests.Trainings;
 using PowerUp.Domain.Responses;
 
-namespace PowerUp.Domain.Abstarctions.Repositories;
+namespace PowerUp.Domain.Abstractions.Repositories;
 
 public interface ITrainingRepository
 {

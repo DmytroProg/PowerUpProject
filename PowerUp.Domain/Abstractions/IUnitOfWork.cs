@@ -1,4 +1,4 @@
-﻿namespace PowerUp.Domain.Abstarctions;
+﻿namespace PowerUp.Domain.Abstractions;
 
 public interface IUnitOfWork
 {

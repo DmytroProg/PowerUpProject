@@ -1,6 +1,6 @@
 ﻿using PowerUp.Domain.Models.Users;
 
-namespace PowerUp.Domain.Abstarctions.Repositories;
+namespace PowerUp.Domain.Abstractions.Repositories;
 
 public interface IUserRepository
 {

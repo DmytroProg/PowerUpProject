@@ -6,8 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using PowerUp.Application.Services.Auth;
 using PowerUp.Application.Services.Auth.Jwt;
 using PowerUp.Application.Services.Trainings;
-using PowerUp.Domain.Abstarctions;
-using PowerUp.Domain.Abstarctions.Repositories;
+using PowerUp.Domain.Abstractions;
+using PowerUp.Domain.Abstractions.Repositories;
 using PowerUp.Infrastructure;
 using PowerUp.Infrastructure.Repositories;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PowerUp.Domain.Abstarctions.Repositories;
+using PowerUp.Domain.Abstractions.Repositories;
 using PowerUp.Domain.Models.Users;
 using PowerUp.Infrastructure.Repositories.Base;
 
