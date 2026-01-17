@@ -12,6 +12,8 @@ public class ExerciseConfiguration : IEntityTypeConfiguration<Exercise>
 
         builder.HasMany(x => x.SimilarExercises)
             .WithMany();
+
+        //builder.Property(e => e.UnrecommendedInjuries);
         
         builder.HasQueryFilter(t => !t.DeletedAt.HasValue);
     }

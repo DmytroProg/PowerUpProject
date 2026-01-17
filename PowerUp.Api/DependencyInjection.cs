@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PowerUp.Application.Services.Auth;
 using PowerUp.Application.Services.Auth.Jwt;
+using PowerUp.Application.Services.Exercises;
 using PowerUp.Application.Services.Trainings;
 using PowerUp.Domain.Abstractions;
 using PowerUp.Domain.Abstractions.Repositories;
@@ -21,10 +22,12 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork>(s => s.GetRequiredService<PowerUpContext>());
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITrainingRepository, TrainingRepository>();
+        services.AddScoped<IExercisesRepository, ExercisesRepository>();
         
         services.AddTransient<IJwtGenerator, JwtGenerator>();
         services.AddScoped<AuthService>();
         services.AddScoped<TrainingsService>();
+        services.AddScoped<ExercisesService>();
 
         return services;
     }

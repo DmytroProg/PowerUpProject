@@ -12,8 +12,7 @@ public class PowerUpContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //modelBuilder.ApplyConfigurationsFromAssembly(typeof(TrainingConfiguration).Assembly);
-        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TrainingConfiguration).Assembly);
         base.OnModelCreating(modelBuilder);
     }
 

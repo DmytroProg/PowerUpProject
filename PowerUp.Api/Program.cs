@@ -1,5 +1,9 @@
+using Microsoft.AspNetCore.Mvc;
 using PowerUp.Api;
+using PowerUp.Api.Endpoints;
 using PowerUp.Api.Middlewares;
+using PowerUp.Application.Services.Exercises;
+using PowerUp.Domain.Requests.Exercises;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +23,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseExercisesEndpoints();
+    
 app.UseMiddleware<GlobalExceptionHandling>();
 
 app.UseHttpsRedirection();

@@ -48,7 +48,7 @@ public class ExercisesRepository : RepositoryBase<Exercise>, IExercisesRepositor
             TotalCount = count,
             Limit = request.Limit,
             Offset = request.Offset,
-            Page = request.Offset / request.Limit
+            Page = 0//request.Offset / request.Limit
         };
     }
 

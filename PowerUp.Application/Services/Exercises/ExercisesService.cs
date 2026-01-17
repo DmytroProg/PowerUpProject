@@ -82,6 +82,16 @@ public class ExercisesService
         return ToExerciseResponse(exercise);
     }
 
+    public async Task<ExerciseResponse?> GetById(int exerciseId, CancellationToken cancellationToken)
+    {
+        var exercise = await _exercisesRepository.GetById(exerciseId, cancellationToken);
+
+        if (exercise == null)
+            return null;
+        
+        return ToExerciseResponse(exercise);
+    }
+
     private ExerciseResponse ToExerciseResponse(Exercise exercise)
     {
         return new ExerciseResponse
