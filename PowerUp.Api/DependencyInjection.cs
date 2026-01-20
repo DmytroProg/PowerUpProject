@@ -18,6 +18,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPowerUpApi(this IServiceCollection services)
     {
+        services.AddMemoryCache();
+        
         services.AddDbContext<PowerUpContext>(options => options.UseInMemoryDatabase("TestPowerUpDB"));
         services.AddScoped<IUnitOfWork>(s => s.GetRequiredService<PowerUpContext>());
         services.AddScoped<IUserRepository, UserRepository>();

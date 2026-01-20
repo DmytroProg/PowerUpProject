@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using PowerUp.Api;
 using PowerUp.Api.Endpoints;
 using PowerUp.Api.Middlewares;
-using PowerUp.Application.Services.Exercises;
-using PowerUp.Domain.Requests.Exercises;
 
 var builder = WebApplication.CreateBuilder(args);
 
