@@ -12,16 +12,17 @@ public static class ExercisesEndpoints
         
         group.MapGet("/", async ([FromBody] ExercisesRequest request, CancellationToken cancellationToken, ExercisesService service) =>
         {
-            request.Limit = 10;
             var exercises = await service.GetExercises(request, cancellationToken);
             return Results.Ok(exercises);
-        });
+        })
+        .RequireAuthorization();
 
         group.MapPost("/", async ([FromBody] CreateExerciseRequest request, CancellationToken cancellationToken, ExercisesService service) =>
         {
             var exercise = await service.AddExercise(request, cancellationToken);
             return Results.Created($"api/v1/exercises/{exercise.Id}", exercise);
-        });
+        })
+        .RequireAuthorization();
 
         group.MapGet("{id}", async ([FromRoute] int id, CancellationToken cancellationToken, ExercisesService service) =>
         {

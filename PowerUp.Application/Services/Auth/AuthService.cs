@@ -45,6 +45,13 @@ public class AuthService
     {
         // validation
 
+        var existingUser = await _userRepository.GetByEmail(request.Email, cancellationToken);
+
+        if (existingUser != null)
+        {
+            throw new ArgumentException($"User with email {request.Email} already exists");
+        }
+        
         var user = new User
         {
             Email = request.Email,

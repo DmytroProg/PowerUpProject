@@ -15,10 +15,4 @@ public class PowerUpContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(TrainingConfiguration).Assembly);
         base.OnModelCreating(modelBuilder);
     }
-
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        Console.WriteLine("Saved");
-        return base.SaveChangesAsync(cancellationToken);
-    }
 }

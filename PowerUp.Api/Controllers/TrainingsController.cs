@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using PowerUp.Application.Services.Trainings;
 using PowerUp.Domain.Requests.Trainings;
@@ -24,9 +24,21 @@ public class TrainingsController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromBody] TrainingsRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll(
+        [FromQuery] int limit = 10, 
+        [FromQuery] int offset = 0, 
+        [FromQuery] string? searchField = null, 
+        CancellationToken cancellationToken = default)
     {
-        if (_memoryCache.TryGetValue(TrainingsCacheKey, out var trainings))
+        var request = new TrainingsRequest
+        {
+            SearchField = searchField,
+            Limit = limit,
+            Offset = offset
+        };
+        var key = $"{TrainingsCacheKey}{JsonSerializer.Serialize(request)}";
+        
+        if (_memoryCache.TryGetValue(key, out var trainings))
         {
             return Ok(trainings);
         }
@@ -37,30 +49,27 @@ public class TrainingsController : ControllerBase
             .SetAbsoluteExpiration(TimeSpan.FromMinutes(10)) // точно стреться через 10 хв
             .SetSlidingExpiration(TimeSpan.FromMinutes(1)); // стреться якщо протягом 1 хв ніхто цей кеш не чіпав
         
-        _memoryCache.Set(TrainingsCacheKey, response, options);
+        _memoryCache.Set(key, response, options);
         
         return Ok(response);
     }
-    
-    [AllowAnonymous]
-    [HttpGet("get2")]
-    public async Task<IActionResult> GetAll2()
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById([FromRoute] int id, CancellationToken cancellationToken)
     {
-        var request = new TrainingsRequest
-        {
-            Offset = 0,
-            Limit = 100,
-            SearchField = null
-        };
+        var response = await _trainingsService.GetById(id, cancellationToken);
         
-        return Ok();
+        return Ok(response);
     }
 
-    [Authorize(Roles = "User")]
+    //[Authorize(Roles = "Admin")]
     [HttpPost]
-    public async Task<IActionResult> Post()
+    public async Task<IActionResult> Post(CreateTrainingRequest request, CancellationToken cancellationToken)
     {
         _memoryCache.Remove(TrainingsCacheKey);
-        return Ok("Admin access");
+
+        var training = await _trainingsService.Add(request, cancellationToken);
+        
+        return Created($"api/v1/trainings/{training.Id}", training);
     }
 }

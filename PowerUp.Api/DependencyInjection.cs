@@ -16,11 +16,11 @@ namespace PowerUp.Api;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddPowerUpApi(this IServiceCollection services)
+    public static IServiceCollection AddPowerUpApi(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMemoryCache();
         
-        services.AddDbContext<PowerUpContext>(options => options.UseInMemoryDatabase("TestPowerUpDB"));
+        services.AddDbContext<PowerUpContext>(options => options.UseSqlServer(configuration.GetConnectionString("Local")));
         services.AddScoped<IUnitOfWork>(s => s.GetRequiredService<PowerUpContext>());
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITrainingRepository, TrainingRepository>();

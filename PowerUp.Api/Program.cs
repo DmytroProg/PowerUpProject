@@ -11,7 +11,7 @@ builder.Services.AddTransient<GlobalExceptionHandling>();
 
 builder.Services
     .AddAuthentication(builder.Configuration)
-    .AddPowerUpApi();
+    .AddPowerUpApi(builder.Configuration);
 
 var app = builder.Build();
 

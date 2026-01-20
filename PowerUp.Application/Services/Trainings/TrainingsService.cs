@@ -26,6 +26,15 @@ public class TrainingsService
 
         return response.ToResponseList(ToTrainingResponse);
     }
+    
+    public async Task<TrainingResponse?> GetById(int id, CancellationToken cancellationToken = default)
+    {
+        var response = await _trainingRepository.GetById(id, cancellationToken);
+
+        return response == null 
+            ? null 
+            : ToTrainingResponse(response);
+    }
 
     public async Task<TrainingResponse> Add(CreateTrainingRequest request, CancellationToken cancellationToken = default)
     {
