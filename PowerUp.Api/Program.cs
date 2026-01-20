@@ -1,10 +1,11 @@
+using Newtonsoft.Json.Converters;
 using PowerUp.Api;
 using PowerUp.Api.Endpoints;
 using PowerUp.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 builder.Services.AddOpenApi();
 
 builder.Services.AddTransient<GlobalExceptionHandling>();
