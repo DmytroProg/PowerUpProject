@@ -10,6 +10,7 @@ using PowerUp.Application.Services.Trainings;
 using PowerUp.Domain.Abstractions;
 using PowerUp.Domain.Abstractions.Repositories;
 using PowerUp.Infrastructure;
+using PowerUp.Infrastructure.Notifications;
 using PowerUp.Infrastructure.Repositories;
 
 namespace PowerUp.Api;
@@ -30,6 +31,8 @@ public static class DependencyInjection
         services.AddScoped<AuthService>();
         services.AddScoped<TrainingsService>();
         services.AddScoped<ExercisesService>();
+
+        services.AddTransient<INotificationService, NotificationService>();
 
         return services;
     }

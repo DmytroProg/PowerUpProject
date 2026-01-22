@@ -11,5 +11,7 @@ public class User : BaseEntity
     public required string NickName { get; set; }
     public required DateTime DateOfBirth { get; set; }
 
+    public bool IsVerified { get; set; }
+
     public UserRole Role { get; set; }
 }
