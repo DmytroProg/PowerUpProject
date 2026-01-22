@@ -92,6 +92,40 @@ public class ExercisesService
         return ToExerciseResponse(exercise);
     }
 
+    public async Task<ExerciseResponse> UpdateExercise(int exerciseId, CreateExerciseRequest request,
+        CancellationToken cancellationToken)
+    {
+        var exercise = await _exercisesRepository.GetById(exerciseId, cancellationToken);
+        
+        if(exercise == null)
+            throw new NotFoundException($"Exercise with id {exerciseId} not found");
+        
+        exercise.Name = request.Name;
+        exercise.Description = request.Description;
+        exercise.ImageUrl = request.ImageUrl;
+        exercise.PrimaryMuscle = request.PrimaryMuscle;
+        exercise.SecondaryMuscles = request.SecondaryMuscles;
+        exercise.Recommendations = request.Recommendations;
+        exercise.Rating = request.Rating;
+        exercise.UnrecommendedInjuries = request.UnrecommendedInjuries;
+        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        return ToExerciseResponse(exercise);
+    }
+
+    public async Task DeleteExercise(int exerciseId, CancellationToken cancellationToken)
+    {
+        var exercise = await _exercisesRepository.GetById(exerciseId, cancellationToken);
+        
+        if(exercise == null)
+            throw new NotFoundException($"Exercise with id {exerciseId} not found");
+        
+        _exercisesRepository.Delete(exercise);
+        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
     private ExerciseResponse ToExerciseResponse(Exercise exercise)
     {
         return new ExerciseResponse

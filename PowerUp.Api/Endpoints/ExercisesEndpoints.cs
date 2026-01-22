@@ -31,6 +31,27 @@ public static class ExercisesEndpoints
         })
         .RequireAuthorization();
         
+        group.MapPost("{exerciseId}/training/{trainingId}", async ([FromRoute] int exerciseId, [FromRoute] int trainingId, CancellationToken cancellationToken, ExercisesService service) =>
+        {
+            var exercise = await service.AddExerciseToTraining(exerciseId, trainingId, cancellationToken);
+            return Results.Ok(exercise);
+        })
+        .RequireAuthorization();
+        
+        group.MapPut("{Id}", async ([FromRoute] int id, [FromBody] CreateExerciseRequest request, CancellationToken cancellationToken, ExercisesService service) =>
+        {
+            var exercise = await service.UpdateExercise(id, request, cancellationToken);
+            return Results.Ok(exercise);
+        })
+        .RequireAuthorization();
+        
+        group.MapDelete("{Id}", async ([FromRoute] int id, CancellationToken cancellationToken, ExercisesService service) =>
+        {
+            await service.DeleteExercise(id, cancellationToken);
+            return Results.NoContent();
+        })
+        .RequireAuthorization();
+        
         return app;
     }
 }

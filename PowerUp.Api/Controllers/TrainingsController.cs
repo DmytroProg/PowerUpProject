@@ -66,10 +66,24 @@ public class TrainingsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(CreateTrainingRequest request, CancellationToken cancellationToken)
     {
-        _memoryCache.Remove(TrainingsCacheKey);
-
         var training = await _trainingsService.Add(request, cancellationToken);
         
         return Created($"api/v1/trainings/{training.Id}", training);
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put([FromRoute] int id, [FromBody] CreateTrainingRequest request, CancellationToken cancellationToken)
+    {
+        var training = await _trainingsService.UpdateTraining(id, request, cancellationToken);
+        
+        return Ok(training);
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        await _trainingsService.DeleteTraining(id, cancellationToken);
+
+        return NoContent();
     }
 }

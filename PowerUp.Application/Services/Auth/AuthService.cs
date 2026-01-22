@@ -37,7 +37,7 @@ public class AuthService
         return new AuthResponse
         {
             Token = _generator.GenerateToken(request.Email),
-            User = user
+            UserId = user.Id
         };
     }
 
@@ -69,7 +69,7 @@ public class AuthService
         return new AuthResponse
         {
             Token = _generator.GenerateToken(request.Email),
-            User = user
+            UserId = user.Id
         };
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using PowerUp.Domain.Abstractions;
 using PowerUp.Domain.Abstractions.Repositories;
+using PowerUp.Domain.CustomExceptions;
 using PowerUp.Domain.Models.Trainings;
 using PowerUp.Domain.Requests.Trainings;
 using PowerUp.Domain.Responses;
@@ -70,6 +71,43 @@ public class TrainingsService
             _logger.LogError(ex.ToString());
             throw;
         }
+    }
+
+    public async Task<TrainingResponse> UpdateTraining(int id, CreateTrainingRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var training = await _trainingRepository.GetById(id, cancellationToken);
+        
+        if (training == null)
+            throw new NotFoundException("Training not found");
+        
+        training.Name = request.Name;
+        training.DifficultyLevel = request.DifficultyLevel;
+        training.TrainingFormat = request.TrainingFormat;
+        training.TrainingGoal = request.TrainingGoal;
+        training.TrainingIntensity = request.TrainingIntensity;
+        training.TrainingStructure = request.TrainingStructure;
+        training.TrainingType = request.TrainingType;
+        
+        // not important actually
+        _trainingRepository.Update(training);
+        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        _logger.LogInformation($"Updated {training.Name}");
+        return ToTrainingResponse(training);
+    }
+
+    public async Task DeleteTraining(int id, CancellationToken cancellationToken = default)
+    {
+        var training = await _trainingRepository.GetById(id, cancellationToken);
+        
+        if (training == null)
+            throw new NotFoundException("Training not found");
+        
+        _trainingRepository.Delete(training);
+        
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     private TrainingResponse ToTrainingResponse(Training training)
