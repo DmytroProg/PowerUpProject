@@ -13,4 +13,6 @@ public class ExerciseHistory
     public required string ExerciseState { get; set; }
 
     public required string SetsHistory { get; set; }
+
+    public decimal MaxWeight { get; set; }
 }
