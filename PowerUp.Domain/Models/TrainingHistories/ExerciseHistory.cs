@@ -8,7 +8,8 @@ public class ExerciseHistory
 
     [ForeignKey(nameof(TrainingHistory))]
     public int TrainingHistoryId { get; set; }
-    public required TrainingHistory TrainingHistory { get; set; }
+
+    public TrainingHistory TrainingHistory { get; set; } = null!;
 
     public required string ExerciseState { get; set; }
 

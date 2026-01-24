@@ -7,6 +7,6 @@ public class TrainingHistoryRequest
     public DateTime? StartTime { get; set; }
     public DateTime? EndTime { get; set; }
 
-    public int Limit { get; set; }
+    public int Limit { get; set; } = 10;
     public int Offset { get; set; }
 }

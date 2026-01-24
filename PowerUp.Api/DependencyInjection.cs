@@ -7,6 +7,7 @@ using PowerUp.Application.Services.Auth;
 using PowerUp.Application.Services.Auth.Jwt;
 using PowerUp.Application.Services.Exercises;
 using PowerUp.Application.Services.Trainings;
+using PowerUp.Application.Services.Trainings.Histories;
 using PowerUp.Domain.Abstractions;
 using PowerUp.Domain.Abstractions.Repositories;
 using PowerUp.Infrastructure;
@@ -26,11 +27,13 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITrainingRepository, TrainingRepository>();
         services.AddScoped<IExercisesRepository, ExercisesRepository>();
+        services.AddScoped<ITrainingHistoryRepository, TrainingHistoriesRepository>();
         
         services.AddTransient<IJwtGenerator, JwtGenerator>();
         services.AddScoped<AuthService>();
         services.AddScoped<TrainingsService>();
         services.AddScoped<ExercisesService>();
+        services.AddScoped<TrainingHistoriesService>();
 
         services.AddTransient<INotificationService, NotificationService>();
 
