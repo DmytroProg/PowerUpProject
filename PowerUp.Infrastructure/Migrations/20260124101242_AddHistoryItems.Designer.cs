@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PowerUp.Infrastructure;
 
@@ -11,9 +12,11 @@ using PowerUp.Infrastructure;
 namespace PowerUp.Infrastructure.Migrations
 {
     [DbContext(typeof(PowerUpContext))]
-    partial class PowerUpContextModelSnapshot : ModelSnapshot
+    [Migration("20260124101242_AddHistoryItems")]
+    partial class AddHistoryItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

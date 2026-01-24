@@ -1,5 +1,6 @@
 ﻿using PowerUp.Domain.Enums;
 using PowerUp.Domain.Models.Base;
+using PowerUp.Domain.Models.TrainingHistories;
 
 namespace PowerUp.Domain.Models.Trainings;
 
@@ -18,4 +19,5 @@ public class Training : BaseEntity
     public int IntervalTime { get; set; }
 
     public ICollection<Exercise> Exercises { get; set; } = new List<Exercise>();
+    public ICollection<TrainingHistory> TrainingHistories { get; set; } = new List<TrainingHistory>();
 }

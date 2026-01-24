@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PowerUp.Domain.Models.TrainingHistory;
+namespace PowerUp.Domain.Models.TrainingHistories;
 
 public class ExerciseHistory
 {
