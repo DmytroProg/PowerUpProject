@@ -24,17 +24,23 @@ public static class DependencyInjection
         
         services.AddDbContext<PowerUpContext>(options => options.UseSqlServer(configuration.GetConnectionString("Local")));
         services.AddScoped<IUnitOfWork>(s => s.GetRequiredService<PowerUpContext>());
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<ITrainingRepository, TrainingRepository>();
-        services.AddScoped<IExercisesRepository, ExercisesRepository>();
-        services.AddScoped<ITrainingHistoryRepository, TrainingHistoriesRepository>();
-        
-        services.AddTransient<IJwtGenerator, JwtGenerator>();
-        services.AddScoped<AuthService>();
-        services.AddScoped<TrainingsService>();
-        services.AddScoped<ExercisesService>();
-        services.AddScoped<TrainingHistoriesService>();
 
+        services.Scan(scan => scan
+            .FromAssembliesOf(
+                typeof(PowerUpContext),
+                typeof(AuthService)
+            )
+            .AddClasses(c => c.Where(t => t.Name.EndsWith("Repository", StringComparison.Ordinal)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime()
+            
+            .AddClasses(c => c.Where(t =>
+                t.Name.EndsWith("Service", StringComparison.Ordinal) &&
+                t != typeof(NotificationService)))
+            .AsSelf()
+            .WithScopedLifetime());
+
+        services.AddTransient<IJwtGenerator, JwtGenerator>();
         services.AddTransient<INotificationService, NotificationService>();
 
         return services;

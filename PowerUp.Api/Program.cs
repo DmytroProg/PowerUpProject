@@ -5,8 +5,15 @@ using PowerUp.Api.Endpoints;
 using PowerUp.Api.HostedServices;
 using PowerUp.Api.Middlewares;
 using PowerUp.Infrastructure;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Serilog configured from appsettings.json
+builder.Host.UseSerilog((context, loggerConfig) =>
+{
+    loggerConfig.ReadFrom.Configuration(context.Configuration);
+});
 
 builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 builder.Services.AddOpenApi();
@@ -20,6 +27,9 @@ builder.Services
     .AddPowerUpApi(builder.Configuration);
 
 var app = builder.Build();
+
+// Optional but “standard”: request logging middleware
+app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {
