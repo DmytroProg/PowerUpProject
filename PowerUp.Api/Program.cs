@@ -18,6 +18,8 @@ builder.Host.UseSerilog((context, loggerConfig) =>
 builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 builder.Services.AddOpenApi();
 
+builder.Services.AddSignalR();
+
 builder.Services.AddHostedService<NotificationHostedService>();
 
 builder.Services.AddTransient<GlobalExceptionHandling>();
@@ -42,8 +44,15 @@ app.UseMiddleware<GlobalExceptionHandling>();
 
 app.UseHttpsRedirection();
 
+app.UseCors(opt => opt.WithOrigins("http://127.0.0.1:5500")
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials());
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.MapControllers();
 

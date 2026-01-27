@@ -15,7 +15,7 @@ public class JwtGenerator : IJwtGenerator
         _configuration = configuration;
     }
 
-    public string GenerateToken(string email)
+    public string GenerateToken(string email, string nickname)
     {
         //генеруємо підпис
         var secretKey = _configuration["Jwt:SecretKey"] ?? throw new ArgumentNullException("SecretKey");
@@ -25,7 +25,7 @@ public class JwtGenerator : IJwtGenerator
         //публічні дані
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, "123"),
+            new Claim(JwtRegisteredClaimNames.Sub, nickname),
             new Claim(JwtRegisteredClaimNames.Email, email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.Role, "User") 
@@ -36,7 +36,7 @@ public class JwtGenerator : IJwtGenerator
             issuer: "http://localhost",
             audience: "http://localhost",
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(1),
+            expires: DateTime.UtcNow.AddHours(3),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
